@@ -4,6 +4,7 @@ import com.example.cardapio.model.Food;
 import com.example.cardapio.repository.FoodRepository;
 import dto.FoodRequestDTO;
 import dto.FoodResponseDTO;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,10 @@ public class FoodService {
 
     public Optional<Food> procurarId(Long id) {
         return foodRepository.findById(id);
+    }
+
+    @Transactional
+    public void deleteFood(Long id) {
+        foodRepository.deleteById(id);
     }
 }

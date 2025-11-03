@@ -31,14 +31,6 @@ public class FoodController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping("/{id}")
-    public ResponseEntity<FoodResponseDTO> getById(@PathVariable Long id) {
-        return foodService.procurarId(id)
-                .map(food -> ResponseEntity.ok(new FoodResponseDTO(food)))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<FoodResponseDTO> saveFood(@RequestBody FoodRequestDTO data) {
         Food savedFood = foodService.saveFood(new Food(data));
@@ -48,12 +40,8 @@ public class FoodController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletFood(@PathVariable Long id) {
-        boolean deleted = foodService.deletar(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
+        foodService.deleteFood(id);
+        return ResponseEntity.noContent().build();
     }
 }
